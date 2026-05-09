@@ -17,7 +17,7 @@ echo "==> Upgrading installed packages"
 $APT upgrade
 
 echo "==> Installing core packages"
-$APT install openssh termux-api termux-services git curl nano termux-auth
+$APT install openssh git curl nano
 
 echo "==> Granting storage access (will prompt)"
 termux-setup-storage || true
