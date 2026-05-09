@@ -1,18 +1,23 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Run inside Termux on the phone:  bash bootstrap.sh
-set -euo pipefail
+set -eu
 
 if [ ! -d /data/data/com.termux ]; then
   echo "This script must be run inside Termux." >&2
   exit 1
 fi
 
-echo "==> Updating packages"
-yes | pkg update
-yes | pkg upgrade
+export DEBIAN_FRONTEND=noninteractive
+APT="apt-get -y -o Dpkg::Options::=--force-confnew"
+
+echo "==> Updating package index"
+$APT update
+
+echo "==> Upgrading installed packages"
+$APT upgrade
 
 echo "==> Installing core packages"
-pkg install -y openssh termux-api termux-services git curl nano iproute2 termux-auth
+$APT install openssh termux-api termux-services git curl nano termux-auth
 
 echo "==> Granting storage access (will prompt)"
 termux-setup-storage || true
@@ -24,7 +29,10 @@ touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 
 echo "==> Setting Termux login password (used for SSH password auth fallback)"
-passwd
+echo "    You'll be prompted twice; pick something memorable."
+until passwd; do
+  echo "Try again."
+done
 
 echo "==> Installing Termux:Boot autostart hook"
 mkdir -p ~/.termux/boot
@@ -32,7 +40,7 @@ cp -f "$(dirname "$0")/start-services" ~/.termux/boot/start-services
 chmod +x ~/.termux/boot/start-services
 
 echo "==> Starting sshd now"
-pkill sshd || true
+pkill sshd 2>/dev/null || true
 sshd
 
 cat <<EOF
@@ -40,10 +48,11 @@ cat <<EOF
 ================================================================
 Setup complete.
 
-  Username:        $(whoami)
-  SSH port:        8022
-  LAN IP:          $(ip -4 addr show wlan0 2>/dev/null | awk '/inet /{print $2}' | cut -d/ -f1)
-  Tailscale IP:    (run 'tailscale ip -4' once the Tailscale app is signed in)
+  Username:     $(whoami)
+  SSH port:     8022
+
+Tailscale IP:   open the Tailscale app, sign in, then in Termux run
+                'tailscale ip -4' (or check the app, "This device").
 
 Add your laptop public key to:
   ~/.ssh/authorized_keys
@@ -51,7 +60,6 @@ Add your laptop public key to:
 Then from your laptop (over Tailscale):
   ssh -p 8022 $(whoami)@<phone-tailscale-name>
 
-See README.md for the manual steps (Tailscale app, ColorOS battery
-whitelist, Termux:Boot install).
+See README.md for ColorOS battery whitelist (still TODO).
 ================================================================
 EOF
