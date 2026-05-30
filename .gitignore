@@ -1,0 +1,3 @@
+# Local smoke-test config — contains secrets (tokens, API keys). Never commit.
+config.env
+*.local.env
