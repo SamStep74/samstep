@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# Installed to ~/.termux/boot/start-services by bootstrap.sh.
+# Termux:Boot runs this on device boot.
+termux-wake-lock
+pkill sshd 2>/dev/null
+sshd
