@@ -112,6 +112,9 @@ requireMatch("README must document Tailscale remote access", readme, /Tailscale/
 requireMatch("README must document port 8022", readme, /\b8022\b/);
 requireMatch("README must document authorized_keys", readme, /authorized_keys/);
 requireMatch("README must document ColorOS battery whitelist", readme, /ColorOS battery whitelist/);
+if (/git checkout\s+claude\/setup-termux-oppo-xR5I2/.test(readme)) {
+  errors.push("README must not reference stale private bootstrap branch");
+}
 
 const scannedText = walkTextFiles(repoRoot)
   .map((entry) => `\n# file: ${entry.relativePath}\n${entry.text}`)

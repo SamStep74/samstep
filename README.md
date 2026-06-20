@@ -38,7 +38,6 @@ In Termux on the phone:
 pkg install -y git
 git clone https://github.com/samstep74/samstep.git
 cd samstep
-git checkout claude/setup-termux-oppo-xR5I2
 bash bootstrap.sh
 ```
 
