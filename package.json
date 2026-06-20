@@ -1,0 +1,15 @@
+{
+  "name": "samstep-termux-bootstrap",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Termux + Tailscale bootstrap notes and scripts for remote Oppo access.",
+  "scripts": {
+    "karpathy:list": "node scripts/karpathy-eval.mjs --list",
+    "karpathy:program": "node scripts/karpathy-eval.mjs --program",
+    "karpathy:run": "node scripts/karpathy-eval.mjs --run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

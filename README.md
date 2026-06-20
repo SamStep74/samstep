@@ -91,3 +91,24 @@ If it fails:
 | Dies after screen lock | `termux-wake-lock` not held. Make sure `start-services` ran; rerun manually. |
 | Disconnects every few minutes | ColorOS background restriction. Lock Termux in recents (padlock icon). |
 | `Permission denied (publickey)` | Public key not in `~/.ssh/authorized_keys`, or file perms wrong (`chmod 600`). |
+
+## Karpathy Eval Harness
+
+This repo exposes a narrow product-research contract for the Termux bootstrap:
+
+```bash
+npm run karpathy:list
+npm run karpathy:program -- termux-bootstrap-contract
+npm run karpathy:run -- termux-bootstrap-contract --best 0
+node scripts/check-termux-bootstrap-contract.mjs
+```
+
+The `termux-bootstrap-contract` eval uses `failing_checks` as a minimize metric.
+It keeps the editable surface limited to the README and bootstrap scripts while
+checking Termux-only guards, sshd startup, boot-hook behavior, restrictive SSH
+permissions, Tailscale/ColorOS instructions, and secret/curl-pipe-shell sentinels.
+
+The harness uses `@a1/ai` when installed, or a nearby `A1-AI-Core` checkout when
+present. In a clean clone it bootstraps the pinned public A1-AI-Core runner into
+the user cache; set `A1_AI_CORE_PATH` or `A1_AI_CORE_CACHE_DIR` to override that
+location for CI.
