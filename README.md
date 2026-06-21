@@ -91,3 +91,16 @@ If it fails:
 | Dies after screen lock | `termux-wake-lock` not held. Make sure `start-services` ran; rerun manually. |
 | Disconnects every few minutes | ColorOS background restriction. Lock Termux in recents (padlock icon). |
 | `Permission denied (publickey)` | Public key not in `~/.ssh/authorized_keys`, or file perms wrong (`chmod 600`). |
+
+## Karpathy Eval
+
+This repo includes a static product contract for the Termux bootstrap flow:
+
+```sh
+node scripts/karpathy-eval.mjs --list
+node scripts/karpathy-eval.mjs --program termux-bootstrap-contract
+node scripts/karpathy-eval.mjs --run termux-bootstrap-contract
+```
+
+Use `--allow-harness-dirty` only while bootstrapping reviewed local harness
+files before committing them.

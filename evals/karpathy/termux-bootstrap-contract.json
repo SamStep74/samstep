@@ -1,0 +1,39 @@
+{
+  "id": "termux-bootstrap-contract",
+  "productName": "samstep Termux bootstrap contract",
+  "runTag": "2026-06-20-termux-bootstrap-contract",
+  "branchPrefix": "karpathy/",
+  "editableFiles": [
+    "README.md",
+    "bootstrap.sh",
+    "start-services"
+  ],
+  "readOnlyFiles": [
+    "scripts/check-termux-bootstrap-contract.mjs"
+  ],
+  "contextFiles": [
+    "LICENSE",
+    ".whitesource"
+  ],
+  "guardrails": [
+    "Keep Termux bootstrap scripts executable and scoped to Termux paths.",
+    "Keep sshd startup idempotent for Termux:Boot.",
+    "Keep SSH key files created with restrictive permissions.",
+    "Keep setup documentation aligned with Tailscale and ColorOS survival steps.",
+    "Keep the repo free of hardcoded tokens, private keys, bearer credentials, and curl-pipe-shell bootstrap behavior."
+  ],
+  "eval": {
+    "command": "node",
+    "args": [
+      "scripts/check-termux-bootstrap-contract.mjs"
+    ],
+    "metric": {
+      "name": "failing_checks",
+      "direction": "minimize"
+    },
+    "successMetricValue": 0,
+    "failureMetricValue": 1,
+    "timeBudgetMinutes": 3,
+    "timeoutMinutes": 10
+  }
+}
