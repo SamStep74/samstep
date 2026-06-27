@@ -1,0 +1,3 @@
+display_name: Karpathy AutoResearch
+short_description: Run Karpathy-inspired eval loops to improve projects.
+default_prompt: Use Karpathy AutoResearch to improve this project with a bounded, metric-driven experiment loop.
